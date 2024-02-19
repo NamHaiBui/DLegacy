@@ -6,58 +6,29 @@ export default function MainHeader() {
   return (
     <>
       <div id="TopMenu" className="border-b">
-        <div className="flex items-center justify-between w-full mx-auto max-w-[1200px]">
-          <ul
-            id="TopMenuLeft"
-            className="flex items-center text-[11px] text-[#333333] px-2 h-8"
-          >
-            <li className="relative px-3">
-              <Link
-                href="/auth"
-                className="flex items-center gap-2 hover:underline cursor-pointer"
-              >
-                <div>Login</div>
-                <BsChevronDown />
-              </Link>
-              <div
-                id="AuthDropdown"
-                className=" hidden absolute bg-white w-[200px] text-[#333333] z-40 top-[20px] left-0 border shadow-lg"
-              ></div>
-              <div className="flex items-center justify-start gap-1 p-3">
-                <img width={50} src="https://picsum.photos/200/300" />
-                <div className="font-bold text-[13px]"> Mamalade</div>
-                <ul className="bg-white">
-                  <li className="text-[11px] py-2 px-4 w-full hover:underline text-blue-600 cursor-pointer">
-                    <link href="/order"> My Order</link>
-                  </li>
-                  <li className="text-[11px] py-2 px-4 w-full hover:underline text-blue-600 cursor-pointer">
-                    <link href="/order"> Sign out</link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li className="px-3 hover:underline cursor-pointer">Daily Deals</li>
-            <li className="px-3 hover:underline cursor-pointer">
-              Help & Contact
-            </li>
-          </ul>
-          <ul
-            id="TopMenuRight"
-            className="flex items-center text-[11px] text-[#333333] px-2 h-8"
-          >
-            <li className="flex items-center gap-2 px-3 hover:underline cursor-pointer">
-              <img width={32} src="/images/uk.png" />
-              Ship to
-            </li>
-            <li className="px-3 hover:underline cursor-pointer">
-              <div className="relative">
-                <AiOutlineShoppingCart size={22} />
-                <div className="absolute text-[10px] -top-[2px] -right-[5px] bg-red-500 w-[14px] h-[14px] rounded-full text-white">
-                  <div className="flex items-center justify-center -mt-[1px]"></div>
+        <div className="flex items-center w-full bg-white">
+          <div className="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py -5 mx-auto">
+            <Link href="/">{/*Put Logo here when you have it!! :D */}</Link>
+            <div className="w-full">
+              <div className="flex items-center">
+                <div className=" relative flex items-center border-2 border-gray-900 w-full p-2">
+                  <button className="flex items-center">
+                    <AiOutlineSearch size={22} />
+                  </button>
+                  <input
+                    className="w-full place-holder-gray-400 text-sm pl-3 focus:outline-none"
+                    placeholder="Random Shit"
+                    type="text"
+                  />
                 </div>
+                <button className="flex items-center bg-blue-600 text-sm font-semibold text-white p-[11px] ml-2 px-14">
+                  {" "}
+                  Search
+                </button>
+                <div className="text-xs px-2 hover:text-blue-500 cursor-pointer">Advanced</div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </>
