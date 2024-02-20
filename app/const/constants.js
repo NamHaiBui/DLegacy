@@ -17,5 +17,16 @@ const product = {
   price: 1,
   marketPrice: 2,
 };
+const order = [
+  {
+    id: 1,
+    stripe_id: "123123123123",
+    name: "",
+    seller: "",
+    meetup_address: "",
+    total: "",
+    ordered_items: [...place_holder],
+  },
+];
 
-export { place_holder, product };
+export { place_holder, product, order };
