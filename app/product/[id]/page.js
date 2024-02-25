@@ -1,9 +1,10 @@
 "use client";
 import MainLayout from "@/app/layouts/MainLayout";
-import place_holder from "@/app/const/constants";
+import product from "@/app/const/constants";
 import Image from "next/image";
 import SimilarProducts from "@/app/components/SimilarProducts";
-const Product = () => {
+const Product = ({ params }) => {
+  const cart = useCart();
   return (
     <MainLayout className="max-w-[1200px] mx-auto">
       <div className="flex px-4 py-10">
@@ -31,9 +32,25 @@ const Product = () => {
                   <div className="font-bold text-[20px] ml-2"></div>
                 ) : null}
               </div>
-              <button className="bg-[#3408C9] text-white py-2 px-20  rounded-full cursor-pointer">
+              <button
+                onClick={() => {
+                  if (cart.isItemAdded) {
+                    cart.removeFromCart(product);
+                    toast.info("Removed from cart", { autoClose: 3000 });
+                  } else {
+                    cart.addToCart(product);
+                    toast.success("Added to cart", { autoClose: 3000 });
+                  }
+                }}
+                className={`text-white py-2 px-20 rounded-full cursor-pointer 
+                      ${
+                        cart.isItemAdded
+                          ? "bg-[#e9a321] hover:bg-[#bf851a]"
+                          : "bg-[#3498C9] hover:bg-[#0054A0]"
+                      }`}
+              >
                 {" "}
-                Add To Cart
+                {cart.isItemAdded ? "Remove From Cart" : "Add To Cart"}
               </button>
             </div>
           </div>
