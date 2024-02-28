@@ -5,6 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useUser } from "@/app/context/user";
 import { useState } from "react";
 import { useCart } from "@/app/context/cart";
+import Image from "next/image";
 export default function TopMenu() {
   const cart = useCart();
   const user = useUser();

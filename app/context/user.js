@@ -1,8 +1,8 @@
 "use client";
-import { createContex, useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+import { createContext, useState, useEffect, useContext } from "react";
+import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-const Context = createContex();
+const Context = createContext();
 const Provider = ({ children }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);

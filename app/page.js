@@ -2,7 +2,8 @@
 
 import MainLayout from "./layouts/MainLayout";
 import CarouselComp from "./components/CarouselComp";
-import place_holder from "./const/constants";
+import { place_holder } from "./const/constants";
+import { ProductComp } from "./components";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
           <div className="text-2xll font-bold mt-4 mb-6 px-4"> Products</div>
           <div className="grid grid-cols-5 gap-4">
             {place_holder.map((product) => {
-              <Product key={product.id} product={product} />;
+              <ProductComp key={product.id} product={product} />;
             })}
           </div>
         </div>

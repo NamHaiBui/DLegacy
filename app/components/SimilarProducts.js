@@ -1,5 +1,5 @@
 import { BiLoader } from "react-icons/bi";
-import place_holder from "../const/constants";
+import { place_holder } from "../const/constants";
 const SimilarProducts = () => {
   return (
     <>

@@ -23,10 +23,10 @@ const order = [
     stripe_id: "123123123123",
     name: "",
     seller: "",
-    meetup_time:"",
+    meetup_time: "",
     meetup_address: "",
     total: "",
-    created_at:"" ,
+    created_at: "",
     ordered_items: [...place_holder],
   },
 ];
