@@ -1,10 +1,13 @@
 "use client";
 import MainLayout from "../layouts/MainLayout";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import React from "react";
+import React, { useEffect } from "react";
 import { TextInput } from "../components";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/user";
+import useUserAddress from "../hooks/useUserAddress";
+import useIsLoading from "../hooks/useIsLoading";
+import ClientOnly from "../components/ClientOnly";
 
 const Address = () => {
   const router = useRouter();
@@ -25,29 +28,180 @@ const Address = () => {
     }
     return "";
   };
-  const getAddress = async() => {
-    if (user?.id == null ||user?.id == undefined){
-      useIsLoading(false)
-      return
+  const getAddress = async () => {
+    if (user?.id == null || user?.id == undefined) {
+      useIsLoading(false);
+      return;
     }
-  }
+    const response = await useUserAddress();
+    if (response) {
+      setCurrentAddress(response);
+      useIsLoading(false);
+    }
+    useIsLoading(false);
+  };
+  useEffect(() => {
+    useIsLoading(true);
+    getAddress(false);
+  }, [user]);
+  const setCurrentAddress = (result) => {
+    setAddressId(result.id);
+    setName(result.name);
+    setAddress(result.address);
+    setZipcode(result.zipcode);
+    setCity(result.city);
+    setCountry(result.country);
+  };
+  const validate = () => {
+    setError(null);
+    setError({});
+    let isError = false;
+
+    if (!name) {
+      setError({ type: "name", message: "A name is required" });
+      isError = true;
+    } else if (!address) {
+      setError({ type: "address", message: "An address is required" });
+      isError = true;
+    } else if (!zipcode) {
+      setError({ type: "zipcode", message: "A zipcode is required" });
+      isError = true;
+    } else if (!city) {
+      setError({ type: "city", message: "A city is required" });
+      isError = true;
+    } else if (!country) {
+      setError({ type: "country", message: "A country is required" });
+      isError = true;
+    }
+    return isError;
+  };
+  const submit = async (event) => {
+    event.preventDefault();
+    let isError = validate();
+
+    if (isError) {
+      toast.error(error.message, { autoClose: 3000 });
+      return;
+    }
+
+    try {
+      setIsUpdatingAddress(true);
+
+      const response = await useCreateAddress({
+        addressId,
+        name,
+        address,
+        zipcode,
+        city,
+        country,
+      });
+
+      setCurrentAddress(response);
+      setIsUpdatingAddress(false);
+
+      toast.success("Address updated!", { autoClose: 3000 });
+
+      router.push("/checkout");
+    } catch (error) {
+      setIsUpdatingAddress(false);
+      console.log(error);
+      alert(error);
+    }
+  };
   return (
     <>
-      {" "}
       <MainLayout>
-        <div id="AdressPage" className="mt-4 max-w-[600px] mx-auto px-2">
-          <div className="mx-auto bg-white rouded-lg p-3">
-            <div className="text-xl text-bold mb-2">Meetup Point Details:</div>
-            <form>
+        <div id="AddressPage" className="mt-4 max-w-[600px] mx-auto px-2">
+          <div className="mx-auto bg-white rounded-lg p-3">
+            <div className="text-xl text-bold mb-2">Address Details</div>
+
+            <form onSubmit={submit}>
               <div className="mb-4">
-                <TextInput
-                  className="w-full"
-                  string={"Test"}
-                  placeholder="Name"
-                />
+                <ClientOnly>
+                  <TextInput
+                    className="w-full"
+                    string={name}
+                    placeholder="Name"
+                    onUpdate={setName}
+                    error={showError("name")}
+                  />
+                </ClientOnly>
               </div>
-              <button className="mt-6 w-full text-white text-lg font-semibold p-3 rounded bg-blue-600">
-                Update Meetup Point Details
+
+              <div className="mb-4">
+                <ClientOnly>
+                  <TextInput
+                    className="w-full"
+                    string={address}
+                    placeholder="Address"
+                    onUpdate={setAddress}
+                    error={showError("address")}
+                  />
+                </ClientOnly>
+              </div>
+
+              <div className="mb-4">
+                <ClientOnly>
+                  <TextInput
+                    className="w-full mt-2"
+                    string={zipcode}
+                    placeholder="Zip Code"
+                    onUpdate={setZipcode}
+                    error={showError("zipcode")}
+                  />
+                </ClientOnly>
+              </div>
+
+              <div className="mb-4">
+                <ClientOnly>
+                  <TextInput
+                    className="w-full mt-2"
+                    string={city}
+                    placeholder="City"
+                    onUpdate={setCity}
+                    error={showError("city")}
+                  />
+                </ClientOnly>
+              </div>
+
+              <div>
+                <ClientOnly>
+                  <TextInput
+                    className="w-full mt-2"
+                    string={country}
+                    placeholder="Country"
+                    onUpdate={setCountry}
+                    error={showError("country")}
+                  />
+                </ClientOnly>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isUpdatingAddress}
+                className={`
+                              mt-6
+                              w-full 
+                              text-white 
+                              text-lg 
+                              font-semibold 
+                              p-3 
+                              rounded
+                              ${
+                                isUpdatingAddress
+                                  ? "bg-blue-800"
+                                  : "bg-blue-600"
+                              }
+                          `}
+              >
+                {!isUpdatingAddress ? (
+                  <div>Update Address</div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                    Please wait...
+                  </div>
+                )}
               </button>
             </form>
           </div>
@@ -56,5 +210,3 @@ const Address = () => {
     </>
   );
 };
-
-export default Address;

@@ -16,15 +16,15 @@ const CarouselComp = () => {
           showThumbs={false}
         >
           <div>
-            <Image src="/images/banner/1.png" />
+            <img src="/images/banner/1.png" />
           </div>
 
           <div>
-            <Image src="/images/banner/2.png" />
+            <img src="/images/banner/2.png" />
           </div>
 
           <div>
-            <Image src="/images/banner/3.png" />
+            <img src="/images/banner/3.png" />
           </div>
         </Carousel>
       </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 const ProductComp = ({ product }) => {
   return (
     <>
@@ -8,10 +10,7 @@ const ProductComp = ({ product }) => {
         className="max-w-[200px] p-1.5 border border-gray-50 hover:border-gray-200 hover:shadow-xl bg-gray-100 rounded mx-auto"
       >
         {product?.url ? (
-          <Image
-            className="rounded cursor-pointer"
-            src={product.url + "/190"}
-          />
+          <img className="rounded cursor-pointer" src={product.url + "/190"} />
         ) : null}
         <div className="pt-2 px-1">
           <div className="font-semibold text-[15px] hover:underline cursor-pointer">

@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 const CheckoutItem = ({ product }) => {
   const pathName = usePathname();
@@ -7,7 +7,7 @@ const CheckoutItem = ({ product }) => {
   return (
     <>
       <div className="flex justify-start rounded-lg mb-2 border p-4">
-        <Image
+        <img
           className="rounded-md w-[150px] h-[150px]"
           src={product.url + "/150"}
         />

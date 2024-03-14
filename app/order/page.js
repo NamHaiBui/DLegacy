@@ -1,11 +1,32 @@
-"use clinet";
+"use client";
 
 import Link from "next/link";
 import { CiDeliveryTruck } from "react-icons/ci";
 import MainLayout from "../layouts/MainLayout";
 import { order } from "../const/constants";
+import { useUser } from "../context/user";
 
 const page = () => {
+  const { user } = useUser();
+  const [orders, setOrders] = useState([]);
+
+  const getOrders = async () => {
+    try {
+      if (!user && !user?.id) return;
+      const response = await fetch("/api/orders");
+      const result = await response.json();
+      setOrders(result);
+      useIsLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong?", { autoClose: 3000 });
+      useIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    useIsLoading(true);
+    getOrders();
+  }, [user]);
   return (
     <>
       <MainLayout>
