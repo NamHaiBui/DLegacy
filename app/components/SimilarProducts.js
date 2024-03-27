@@ -9,9 +9,9 @@ export default function SimilarProducts() {
 
   const getRandomProducts = async () => {
     try {
-      const response = await fetch("/api/products/get-random");
+      const response = await fetch("/api/products/get_random");
+      // console.log(response)
       const result = await response.json();
-
       if (result) {
         setProducts(result);
         return;
@@ -19,6 +19,7 @@ export default function SimilarProducts() {
 
       setProducts([]);
     } catch (error) {
+      
       console.log(error);
       alert(error);
     }
@@ -35,7 +36,7 @@ export default function SimilarProducts() {
 
         <div className="max-w-[1200px] mx-auto">
           <div className="font-bold text-2xl py-2 mt-4">
-            Similar sponsored items
+            Similar items
           </div>
 
           {products.length > 0 ? (

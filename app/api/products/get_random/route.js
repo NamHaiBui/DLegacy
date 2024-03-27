@@ -10,6 +10,7 @@ export async function GET() {
             skip: skip,
             orderBy: { id: 'asc' },
         })
+        
         await prisma.$disconnect();
         return NextResponse.json(products);
     } catch (error) {

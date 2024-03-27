@@ -4,16 +4,20 @@ import product from "@/app/const/constants";
 import Image from "next/image";
 import SimilarProducts from "@/app/components/SimilarProducts";
 import useIsLoading from "@/app/hooks/useIsLoading";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useCart } from "@/app/context/cart";
 const Product = ({ params }) => {
+
   const cart = useCart();
   const [product, setProduct] = useState({});
   const getProduct = async () => {
     useIsLoading(true);
     setProduct({});
     const response = await fetch(`/api/product/${params.id}`);
+    const prod = await response.json()
     setProduct(prod);
     cart.isItemAddedToCart(prod);
+    useIsLoading(false);
   };
   useEffect(() => {
     getProduct();
@@ -21,7 +25,7 @@ const Product = ({ params }) => {
   return (
     <MainLayout className="max-w-[1200px] mx-auto">
       <div className="flex px-4 py-10">
-        {place_holder?.url ? (
+        {product?.url ? (
           <img className="w-[40%] rounded-lg" src={product?.url + "/200"} />
         ) : (
           <div className="w-[40%]"> </div>
